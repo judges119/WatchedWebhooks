@@ -1,20 +1,39 @@
 # WatchedWebhooks
 
-A web servce that aggregates data from your GitHub [News Feed](https://help.github.com/articles/news-feed/) using the [Feedparser](https://github.com/danmactough/node-feedparser) package for Node.js. You can connect to it via a web interface where it will make API calls to get all your watched repositories. If you create a new web hook you can select a or multiple watched repositories to be notified about and for which actions you'd like to receive notifications (commits, merges, new issues/pull requests). You also set a (or many) URLs that it should make POST requests too.
+Polls the GitHub [User Received Events](https://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received) endpoint of a provided username. This is matched against a set of rules loaded from rules.js (example provided in rules.js.example) when the application starts. If an event matches a rule, it fires off a POST request to a URL specified in the rule, with the event data as the body of the request. The user will need to create a GitHub application to use this, as the application key/secret is needed to make API requests.
 
-It regularly polls your feed until it receives a new item which matches one of the web hook rules you created. It then makes an API call to the specified repository regarding the specified action to get as much information as possible. Once that's returned, it uses the data in the payload of a POST request it makes the URL(s) attached to the web hook.
+## Use
 
-> This may actually be useful to multiple people. Probably give it more weight and importance, even though you may not get rich you may make people's lives a bit easier.
+Start the application with three arguments on the command line:
+
+1. GitHub application key
+2. GitHub application secret
+3. GitHub username of your user (it will use the public data of your news feed)
+
+For example:
+
+`node server.js 123456GITHUBKEY123456 09876GITHUBSECRET0987 judges119`
 
 ## Technology
 
-* Node.js
-* ExpressJS
-* PassportJS
+* [Node.js](https://nodejs.org/)
+* [node-github](https://github.com/mikedeboer/node-github)
 
-## TODO
+## Usable Event Types
 
-* Rewrite settings.js function as an object literal
-* Build a test CMS implementation
-  * Save as own project
-* Abstract out customisation to configuration
+* IssuesEvent
+* PullRequestEvent
+* CreateEvent
+* DeleteEvent
+* CommitCommentEvent
+* IssueCommentEvent
+* PushEvent
+* GollumEvent
+
+## To Do
+
+* Test initial release
+* Introduce JSON schema for rules
+* Test rules against schema on startup
+* Ensure correct number of arguments given with script
+* If only a username is provided, allow API use without application (add throttle)

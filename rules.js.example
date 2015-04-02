@@ -1,0 +1,18 @@
+/*
+Customisable rules and the webhooks they engage. Each must include an event, a repo and a webhook.
+*/
+module.exports = [{
+  //The event type
+  "event": "CommitCommentEvent",
+  //The user performing the event
+  "actor": "judges119",
+  //The repo in question (in :owner/:repo format)
+  "repo": "judges119/140charADV",
+  //The URL to POST relevant data too
+  "webhook": "http://example.com/webhooks"
+}, {
+  "event": "PushEvent",
+  "actor": "judges119",
+  "repo": "judges119/140charADV",
+  "webhook": "http://example.com/webhooks"
+}];
