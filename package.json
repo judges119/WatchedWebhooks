@@ -4,8 +4,7 @@
   "private": true,
   "main": "server.js",
   "dependencies": {
-    "github": "^0.2.3",
-    "request": "^2.54.0",
+    "github": "^0.2.3"
   },
   "devDependencies": {},
   "scripts": {}
