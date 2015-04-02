@@ -41,7 +41,6 @@ function requestAPI() {
     }
     app.etag = json.meta.etag;
     delete json.meta;
-    console.log(json);
     fireHooks(matchingRules(newItems(app.recent, json)));
     app.recent = json;
   });
