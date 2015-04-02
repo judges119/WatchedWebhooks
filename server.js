@@ -1,11 +1,11 @@
 var url = require('url');
 var http = require('http');
 var GitHubApi = require('github');
-var auth = {
+/*var auth = {
   type: "oauth",
   key: process.argv[2],
   secret: process.argv[3]
-}
+}*/
 var app = {};
 app.rules = require('./rules');
 app.recent = [];
@@ -31,12 +31,12 @@ Makes a request to the GitHub API for events regarding the user provided as a co
 Checks responses against rules and takes further action if necessary
 */
 function requestAPI() {
-  github.authenticate(auth);
+  //github.authenticate(auth);
   github.events.getReceived({
     headers: {
       "If-None-Match": app.etag
     },
-    user: process.argv[4];
+    user: process.argv[2];
   }, function(err, json) {
     (err || json.meta.status.indexOf('304 Not Modified') > -1) && return;
     app.etag = json.meta.etag;
